@@ -1,4 +1,4 @@
-process Step2 {
+process AssembleTabs {
     cpus 2
     memory  = 5.GB
     
@@ -14,6 +14,7 @@ process Step2 {
     """
     echo "library_name\trRNA_read_count\tdepth\trRNA_percent" > header.txt
     cat header.txt *.name.txt > assembled_file.txt
+    sleep 5
 	"""
 }
 
