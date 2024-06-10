@@ -14,6 +14,7 @@ process AssembleTabs {
     """
     echo "library_name\trRNA_read_count\tdepth\trRNA_percent" > header.txt
     cat header.txt *.name.txt > assembled_file.txt
+    # Rscript plot_figure.R 
     sleep 5
 	"""
 }
