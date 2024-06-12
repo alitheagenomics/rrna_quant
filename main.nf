@@ -1,16 +1,19 @@
 #!/usr/bin/env nextflow
 
-params.in_dir = ""
+params.input = ""
+params.rrna_ref = "data/rRNA.fa"
 params.out_dir = "results" 
 
 include { ComputeRrna } from './modules/ComputeRrna'
 include { AssembleRrnaTabs } from './modules/AssembleRrnaTabs'
 
 workflow {
-    input_files_ch = Channel.fromPath( "${params.in_dir}/**" )
-    
+    // Load FASTQs into channel
+    sample_run_ch = Channel.fromFilePairs( params.input + '*_R{1,2}.fastq.gz', checkIfExists:true ) 
+    rrna_ref_ch = Channel.fromPath( params.rrna_ref ).collect()
+ 
     // Run Step 1 : 
-    processed_files_ch = ComputeRrna( input_files_ch )
+    processed_files_ch = ComputeRrna( sample_run_ch, rrna_ref_ch )
 
     // Run Step 2 : 
     output_ch = AssembleRrnaTabs( processed_files_ch.toList() )	

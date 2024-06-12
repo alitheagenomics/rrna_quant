@@ -1,4 +1,4 @@
-process AssembleTabs {
+process AssembleRrnaTabs {
     cpus 2
     memory  = 5.GB
     
