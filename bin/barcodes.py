@@ -77,7 +77,7 @@ def barcodes_analysis(barcodes_dir, output_dir):
     #plt.show()
 
     # Saving to .csv
-    table_data = [(f'{item[0]}', f'{item[1]:.2f}%') for item in percentages]  
+    table_data = [(f'{item[0]}', f'{item[1]}') for item in percentages]  
     output_csv_file = os.path.join(output_dir, 'Barcode_analysis.csv')
     with open(output_csv_file, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
