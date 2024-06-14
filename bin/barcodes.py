@@ -12,7 +12,7 @@ import argparse
 import csv
 
 def main(fastq_file, barcodes_dir, output_dir):
-    subprocess.call(f"gzcat {fastq_file} | head -100000 > FASTQ_sub.fq", shell=True)    # to read first 100k lines of FASTQ file
+    subprocess.call(f"zcat {fastq_file} | head -100000 > FASTQ_sub.fq", shell=True)    # to read first 100k lines of FASTQ file
 
     barcodes_analysis(barcodes_dir, output_dir)
 
