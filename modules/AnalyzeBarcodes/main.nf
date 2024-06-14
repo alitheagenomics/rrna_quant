@@ -1,17 +1,17 @@
 process AnalyzeBarcodes {
-    publishDir "${params.out_dir}/$library_name", mode: 'copy'
+    publishDir "${params.out_dir}", mode: 'copy'
     
     input:
     tuple val(library_name), path(reads)
     path barcodes
 
     output:
-    path "${params.out_dir}/$library_name/*"
+    path "${library_name}"
 
     script:
     def (read1, read2) = reads
     """
-    mkdir -p ${params.out_dir}/$library_name
-    python3 $projectDir/bin/barcodes.py ${read1} ${barcodes} ${params.out_dir}/$library_name
+    mkdir -p "${library_name}"
+    python3 $projectDir/bin/barcodes.py ${read1} ${barcodes} "${library_name}"
     """
 }
