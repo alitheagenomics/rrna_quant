@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import subprocess
 import os
 import glob
@@ -54,7 +53,29 @@ def barcodes_analysis(barcodes_dir, output_dir):
     total_reads = len(barcodes)
     percentages_dict = {brc: (counts[brc] / total_reads) * 100 for brc in counts}
     percentages = sorted([(key, value) for key, value in percentages_dict.items()], key=lambda x: x[1], reverse=True)
-    chosen_barcode = percentages[0][0]
+    
+    barcodes_hierarchy = "/Users/athonet/Library/CloudStorage/OneDrive-AlitheaGenomicsSA/Desktop/Shiny_app1/rrna_quant/barcodes_hierarchy.txt"
+    with open(barcodes_hierarchy, 'r') as file:
+        hierarchy = [line.strip() for line in file]
+
+    # Checks if ties
+    ties = []
+    max_p = percentages[0][1]
+    for barcode, percentage in percentages:
+        if percentage == max_p:
+            ties.append(barcode)
+        else:
+            break
+    if len(ties) > 1:
+        for barcode in hierarchy:
+            if barcode in ties:
+                chosen_barcode = barcode
+                break
+    else:
+        chosen_barcode = percentages[0][0]
+    
+    percentages = [(barcode, percentage) for barcode, percentage in percentages if barcode == chosen_barcode] + \
+              [(barcode, percentage) for barcode, percentage in percentages if barcode != chosen_barcode]
 
     # Barplot
     barcodes = [item[0] for item in percentages]
