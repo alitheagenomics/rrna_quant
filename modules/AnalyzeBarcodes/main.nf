@@ -6,6 +6,7 @@ process AnalyzeBarcodes {
     path barcodes
 
     output:
+    path "${library_name}"
     path "${library_name}/chosen_barcodes.txt" 
 
     script:
