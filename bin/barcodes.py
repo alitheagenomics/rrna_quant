@@ -54,7 +54,7 @@ def barcodes_analysis(barcodes_dir, output_dir, save_plot=False):
     percentages_dict = {brc: (counts[brc] / total_reads) * 100 for brc in counts}
     percentages = sorted([(key, value) for key, value in percentages_dict.items()], key=lambda x: x[1], reverse=True)
     
-    barcodes_hierarchy = "/Users/athonet/Library/CloudStorage/OneDrive-AlitheaGenomicsSA/Desktop/Shiny_app1/rrna_quant/barcodes_hierarchy.txt"
+    barcodes_hierarchy = "barcodes_hierarchy.txt"
     with open(barcodes_hierarchy, 'r') as file:
         hierarchy = [line.strip() for line in file]
 
