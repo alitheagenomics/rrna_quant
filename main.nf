@@ -8,6 +8,7 @@ params.out_dir = "results"
 include { ComputeRrna } from './modules/ComputeRrna'
 include { AssembleRrnaTabs } from './modules/AssembleRrnaTabs'
 include { AnalyzeBarcodes } from './modules/AnalyzeBarcodes'
+include { AssembleBarcodes } from './modules/AssembleBarcodes'
 
 workflow {
     // Load FASTQs into channel
@@ -23,4 +24,7 @@ workflow {
 
     // Run Step 3 :
     output_barcodes = AnalyzeBarcodes(sample_run_ch, barcodes_channel)
+
+    // Run Step 4 :
+    barcodes_ch = AssembleBarcodes(output_barcodes.toList(), sample_run_ch, barcodes_channel)
 }
