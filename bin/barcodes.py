@@ -9,6 +9,7 @@ import gzip
 from Bio import SeqIO
 import argparse
 import csv
+from pathlib import Path
 
 def main(fastq_file, barcodes_dir, output_dir, save_plot=False):
     subprocess.call(f"zcat {fastq_file} | head -100000 > FASTQ_sub.fq", shell=True)    # to read first 100k lines of FASTQ file
@@ -54,7 +55,8 @@ def barcodes_analysis(barcodes_dir, output_dir, save_plot=False):
     percentages_dict = {brc: (counts[brc] / total_reads) * 100 for brc in counts}
     percentages = sorted([(key, value) for key, value in percentages_dict.items()], key=lambda x: x[1], reverse=True)
     
-    barcodes_hierarchy = "barcodes_hierarchy.txt"
+    current_directory = Path(__file__).resolve().parent
+    barcodes_hierarchy = current_directory.parent/"barcodes_hierarchy.txt"
     with open(barcodes_hierarchy, 'r') as file:
         hierarchy = [line.strip() for line in file]
 
